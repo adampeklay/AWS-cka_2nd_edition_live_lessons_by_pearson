@@ -1,6 +1,6 @@
-# https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest
-module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
+module "cka_lab_vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "~> 3.11"
 
   name = "cka-lab"
   cidr = "192.168.0.0/16"
@@ -11,7 +11,6 @@ module "vpc" {
 
   enable_nat_gateway     = true
   single_nat_gateway     = true
-  one_nat_gateway_per_az = false
 
   tags = {
     Terraform   = "true"

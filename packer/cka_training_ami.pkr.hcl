@@ -22,17 +22,13 @@ locals {
 
   script = "bootstrap_ami.sh"
 
-  controller = "kube controller"
-
-  worker = "kube worker"
-
   aws_profile = "packer"
 }
 
-source "amazon-ebs" "centos-kube-controller" {
+source "amazon-ebs" "k8s-lab-ami" {
   region        = local.region
   profile       = local.aws_profile
-  ami_name      = "${local.controller}-{{timestamp}}"
+  ami_name      = "k8s-lab-ami-{{timestamp}}"
   instance_type = local.instance_type
   source_ami_filter {
     filters = {
@@ -44,39 +40,17 @@ source "amazon-ebs" "centos-kube-controller" {
     owners      = local.owners
   }
   ssh_username = local.ssh_username
-  tags = {
-    Name = local.controller
-  }
-}
-
-source "amazon-ebs" "centos-kube-worker" {
-  ami_name      = "${local.worker}-{{timestamp}}"
-  instance_type = local.instance_type
-  region        = local.region
-  profile       = local.aws_profile
-  source_ami_filter {
-    filters = {
-      name                = local.source_ami_filter_name
-      root-device-type    = "ebs"
-      virtualization-type = "hvm"
-    }
-    most_recent = "false"
-    owners      = local.owners
-  }
-  ssh_username = local.ssh_username
-  tags = {
-    Name = local.worker
-  }
 }
 
 build {
-  name = "cka lab"
+  name = "cka lab ami"
   sources = [
-    "source.amazon-ebs.centos-kube-controller",
-    "source.amazon-ebs.centos-kube-worker"
+    "source.amazon-ebs.k8s-lab-ami"
   ]
 
   provisioner "shell" {
     script = "${local.script_dir}/${local.script}"
   }
 }
+
+// see how to delete old snapshots after an AMI is created, to avoid $$ charges
