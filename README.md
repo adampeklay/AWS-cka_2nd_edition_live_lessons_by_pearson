@@ -14,8 +14,11 @@ user ~ $ ll .ssh|grep cka
 user ~ $
 ```
 
-### INPUTS
-wip
+### INPUTS - WIP
+my_current_ip
 
-### OUTPUTS
-wip
+### OUTPUTS - WIP
+```
+kube_controller_public_ip
+
+```

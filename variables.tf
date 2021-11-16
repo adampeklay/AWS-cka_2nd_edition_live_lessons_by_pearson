@@ -16,7 +16,7 @@ variable "worker_instance_type" {
   default     = "t2.micro"
 }
 
-variable "home_ip" {
+variable "my_current_ip" {
   type        = string
   description = "needed for ingress security group, set value in cka_lab.tfvars file"
 }

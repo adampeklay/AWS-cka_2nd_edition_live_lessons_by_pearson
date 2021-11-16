@@ -20,7 +20,7 @@ resource "aws_security_group" "cka_lab" {
       from_port        = 22
       to_port          = 22
       protocol         = "tcp"
-      cidr_blocks      = [var.home_ip]
+      cidr_blocks      = [var.my_current_ip]
       ipv6_cidr_blocks = []
       prefix_list_ids  = []
       security_groups  = []
