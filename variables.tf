@@ -7,17 +7,34 @@ variable "key_name" {
 
 variable "controller_instance_type" {
   type        = string
-  description = "the instance type for the kubernetes controller instance(s)"
+  description = "The instance type for the kubernetes controller instance(s)"
   default     = "t3a.small"
 }
 
 variable "worker_instance_type" {
   type        = string
-  description = "the instance type for the kubernetes worker instance(s)"
+  description = "The instance type for the kubernetes worker instance(s)"
   default     = "t2.micro"
 }
 
 variable "my_current_ip" {
   type        = string
-  description = "needed for ingress security group, set value in cka_lab.tfvars file"
+  description = "Needed for ingress security group, set value in cka_lab.tfvars file"
+}
+
+variable "private_subnets" {
+  type = list
+  description = "The private subnet the lab will use"
+  default = ["192.168.4.0/24"]
+}
+
+variable "public_subnets" {
+  type = list
+  description = "The public subnet the lab will use"
+  default = ["192.168.104.0/24"]
+}
+
+variable "region" {
+  type = string
+  description = "The AWS region to deploy the cluster in"
 }
