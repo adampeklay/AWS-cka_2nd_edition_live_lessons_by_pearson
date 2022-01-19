@@ -1,3 +1,4 @@
+// Any variable without a default is to be declared in cka_lab.tfvars
 variable "key_name" {
   type        = string
   description = "The SSH keypair to use via ssh to the ec2 instances"
