@@ -19,7 +19,7 @@ variable "worker_instance_type" {
 
 variable "my_current_ip" {
   type        = string
-  description = "Needed for ingress security group, set value in cka_lab.tfvars file"
+  description = "Needed for ingress security group"
 }
 
 variable "cidr" {
