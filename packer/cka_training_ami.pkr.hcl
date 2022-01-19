@@ -14,7 +14,7 @@ locals {
 
   source_ami_filter_name = "CentOS-7-20200923-2003.x86_64-d9a3032a-921c-4c6d-b150-bde168105e42-ami-0c5a39cd417835870.4"
 
-  owners = ["679593333241"]
+  owners = ["<redacted>""]
 
   ssh_username = "centos"
 
