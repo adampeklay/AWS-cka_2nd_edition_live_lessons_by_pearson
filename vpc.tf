@@ -1,13 +1,14 @@
+// These IPs are hardcoded for the lab per the lab setup requirements
 module "cka_lab_vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 3.11"
 
   name = "cka-lab"
-  cidr = "192.168.0.0/16"
+  cidr = var.cidr
 
-  azs             = ["us-east-1a"]
-  private_subnets = ["192.168.4.0/24"]
-  public_subnets  = ["192.168.104.0/24"]
+  azs             = [var.region]
+  private_subnets = [var.private_subnets]
+  public_subnets  = [var.public_subnets]
 
   enable_nat_gateway     = true
   single_nat_gateway     = true
