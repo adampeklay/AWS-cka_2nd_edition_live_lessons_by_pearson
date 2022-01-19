@@ -1,2 +1,2 @@
-my_current_ip = "<redacted>/32"
+my_current_ip = "<redacted>"
 region = "us-east-1a"

@@ -1,4 +1,3 @@
-// These IPs are hardcoded for the lab per the lab setup requirements
 module "cka_lab_vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 3.11"

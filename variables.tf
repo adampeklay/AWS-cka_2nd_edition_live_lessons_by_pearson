@@ -22,6 +22,13 @@ variable "my_current_ip" {
   description = "Needed for ingress security group, set value in cka_lab.tfvars file"
 }
 
+variable "cidr" {
+  type = string
+  description = "the CIDR block for the lab"
+  default = "192.168.0.0/16"
+}
+
+
 variable "private_subnets" {
   type = list
   description = "The private subnet the lab will use"
@@ -38,3 +45,5 @@ variable "region" {
   type = string
   description = "The AWS region to deploy the cluster in"
 }
+
+// variablize tags too
