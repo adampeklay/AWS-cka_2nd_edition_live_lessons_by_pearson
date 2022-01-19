@@ -28,7 +28,6 @@ variable "cidr" {
   default = "192.168.0.0/16"
 }
 
-
 variable "private_subnets" {
   type = list
   description = "The private subnet the lab will use"
