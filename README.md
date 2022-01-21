@@ -3,7 +3,8 @@ A Terraform module to spin up a CKA cluster required for the CKA 2nd Edition Vid
 
 
 ### General information
-Each AWS resource is created by calling modules from the [terraform-aws-modules](https://github.com/terraform-aws-modules).
+Each AWS resource is created by calling modules from the [terraform-aws-modules](https://github.com/terraform-aws-modules).  
+
 WIP
 
 ## I should have this wrapped up soon, holidays were busy
@@ -21,7 +22,7 @@ user ~ $
 ```
 WIP
 ### INPUTS
-my_current_ip. 
+my_current_ip 
 
 WIP - create table
 ### OUTPUTS
