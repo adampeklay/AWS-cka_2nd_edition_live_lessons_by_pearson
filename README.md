@@ -3,7 +3,12 @@ A Terraform module to spin up a CKA cluster required for the CKA 2nd Edition Vid
 
 
 ### General information
-Each AWS resource (Terrafomr root module) is created by calling modules from various [terraform-aws-modules](https://github.com/terraform-aws-modules) repos.  
+The Packer shell script still needs some work, I missed a script the instructor created thats needed to create the lab.  
+
+WIP 
+
+
+Each AWS resource is a Terraform root module, which is created by calling modules from various [terraform-aws-modules](https://github.com/terraform-aws-modules) repos.  
 
 WIP
 
