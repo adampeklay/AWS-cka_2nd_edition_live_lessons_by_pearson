@@ -3,7 +3,7 @@ A Terraform module to spin up a CKA cluster required for the CKA 2nd Edition Vid
 
 
 ### General information
-Each AWS resource is created by calling modules from various [terraform-aws-modules](https://github.com/terraform-aws-modules) repos.  
+Each AWS resource (Terrafomr root module) is created by calling modules from various [terraform-aws-modules](https://github.com/terraform-aws-modules) repos.  
 
 WIP
 
