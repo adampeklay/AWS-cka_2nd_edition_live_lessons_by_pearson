@@ -5,10 +5,10 @@ resource "aws_security_group" "cka_lab" {
 
   ingress = [
     {
-      description = "instance to instance"
-      from_port   = 0
-      to_port     = 0
-      protocol    = "-1"
+      description      = "instance to instance"
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
       cidr_blocks      = []
       self             = true
       ipv6_cidr_blocks = [] #

@@ -51,7 +51,6 @@ After terraform is ran, we'll get the public IP of the `kube_controller`, so we 
 Outputs:
 
 kube_controller_public_ip = "54.91.34.23"
-
 ```
 
 ## Usage
