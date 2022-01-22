@@ -1,5 +1,5 @@
 # cka_2nd_edition_live_lessons_by_pearson
-Packer AMI code and a Terraform module to spin up a CKA cluster required for the CKA 2nd Edition Video course published by Pearson IT Certification
+Packer AMI code and Terraform root modules used to spin up a CKA cluster, spec'd out as required by the `CKA 2nd Edition Video course published by Pearson IT Certification`.
 
 
 ### General information
