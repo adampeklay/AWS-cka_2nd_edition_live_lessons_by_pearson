@@ -1,20 +1,19 @@
 # cka_2nd_edition_live_lessons_by_pearson
-A Terraform module to spin up a CKA cluster required for the CKA 2nd Edition Video course published by Pearson IT Certification
+Packer AMI code and a Terraform module to spin up a CKA cluster required for the CKA 2nd Edition Video course published by Pearson IT Certification
 
 
 ### General information
-The Packer shell script still needs some work, I missed a script the instructor created thats needed to create the lab.  
-
 WIP 
 
 
-Each AWS resource is a Terraform root module, which is created by calling modules from various [terraform-aws-modules](https://github.com/terraform-aws-modules) repos.  
+Each AWS resource is a Terraform root module, which is created by calling modules from various [terraform-aws-modules](https://github.com/terraform-aws-modules) repositories.  
 
-WIP
+## Local requirements
 
-## I should have this wrapped up soon, holidays were busy
+### WIP turn this into a local bash setup script once all the manual steps are noted  
 
-## requirements
+We'll need an ssh key-pair:  
+
 ```
 user ~ $ ssh-keygen
 ..
@@ -25,14 +24,61 @@ user ~ $ ll .ssh|grep cka
 -rw-r--r--   1 user  staff   578B Nov  8 15:48 cka_lab_rsa.pub
 user ~ $
 ```
-WIP
+
+We'll need to set the follow local environment variables in your terminal:
+
+```
+export TF_VAR_my_current_ip=$(curl -4 icanhazip.com)\/32
+export TF_VAR_public_key="your public key you created in quotes"
+
+```
+TODO:  
+
+- PACKER: var for packer owner / aws cli to script for centos AMI. Get the owner string for var definition, subscribe, etc
+- extra steps in the lab, finish watching 3.1 and update packer script calls
+- tags
+
+
+
 ### INPUTS
-my_current_ip 
 
-WIP - create table
+TODO:  
+- tfvar inputs
+
 ### OUTPUTS
+After terraform is ran, we'll get a public IP on the controller to ssh to the cluster:
 ```
-kube_controller_public_ip
+Outputs:
+
+kube_controller_public_ip = "<redacted>"
 
 ```
-WIP - create table
+
+## Usage
+TODO:  
+- instructions for packer after thats all automated
+- aws cli setup (optional)
+- tfenv (optional)
+- terraform validate, terraform fmt, terraform plan
+- tweak the overall layout of the USAGE section for ease of use
+
+Spin up the lab, you'll get an IP address you can ssh to using the private key from the keypair you created previously, using the ssh user `centos`:
+```
+terraform apply --var-file=cka_lab.tfvars --auto-approve
+...
+...
+...
+module.cka_lab_vpc.aws_route.private_nat_gateway[0]: Creating...
+module.cka_lab_vpc.aws_route.private_nat_gateway[0]: Creation complete after 1s [id=r-rtb-05d3fe23d26942ba71080289494]
+
+Apply complete! Resources: 18 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+kube_controller_public_ip = "54.91.34.23"
+$ ssh -i ~/.ssh/cka_lab centos@54.91.34.23
+```
+When you're done, destroy all the resources to keep your AWS bill nice and low.
+```
+terraform destroy --var-file=cka_lab.tfvars --auto-approve
+```

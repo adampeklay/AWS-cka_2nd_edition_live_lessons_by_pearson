@@ -32,8 +32,8 @@ module "kube-worker" {
 // add tags
 }
 
-// ec2 instance key pair - refrerence any local keypair you wish to use
+// ec2 instance key pair - refrerence any local keypair's public key you wish to use
 resource "aws_key_pair" "cka_lab" {
   key_name   = "cka_lab"
-  public_key = "<redacted>"
+  public_key = var.public_key
 }
