@@ -46,7 +46,7 @@ TODO:
 - tfvar inputs
 
 ### OUTPUTS
-After terraform is ran, we'll get the public IP of the `kube_controller` so we can ssh to the cluster:
+After terraform is ran, we'll get the public IP of the `kube_controller`, so we can ssh to the cluster:
 ```
 Outputs:
 
