@@ -1,5 +1,5 @@
 // public subnet
-module "kube-controller" {
+module "kube_controller" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 3.2"
 
@@ -12,11 +12,11 @@ module "kube-controller" {
   vpc_security_group_ids      = [aws_security_group.cka_lab.id]
   subnet_id                   = module.cka_lab_vpc.public_subnets[0]
   associate_public_ip_address = true
+
   // add tags
 }
 
-// private subnet
-module "kube-worker" {
+module "kube_worker" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 3.2"
 
@@ -29,6 +29,7 @@ module "kube-worker" {
   monitoring             = false
   vpc_security_group_ids = [aws_security_group.cka_lab.id]
   subnet_id              = module.cka_lab_vpc.private_subnets[0]
+
   // add tags
 }
 

@@ -20,7 +20,8 @@ variable "worker_instance_type" {
 variable "my_current_ip" {
   type        = string
   description = "LOCAL ENV VAR: Needed for ingress security group"
-  //export TF_VAR_my_current_ip=$(curl -4 icanhazip.com)/\32\
+  //export TF_VAR_my_current_ip=$(curl -4 icanhazip.com)/\32
+
 }
 
 variable "cidr" {
@@ -29,13 +30,14 @@ variable "cidr" {
   default     = "192.168.0.0/16"
 }
 
-variable "private_subnets" {
+
+variable "private_subnet" {
   type        = list(any)
   description = "The private subnet the lab will use"
   default     = ["192.168.4.0/24"]
 }
 
-variable "public_subnets" {
+variable "public_subnet" {
   type        = list(any)
   description = "The public subnet the lab will use"
   default     = ["192.168.104.0/24"]
