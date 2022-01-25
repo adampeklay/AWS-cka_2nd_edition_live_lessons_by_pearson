@@ -6,14 +6,10 @@ module "cka_lab_vpc" {
   cidr = var.cidr
 
   azs             = [var.region]
-  private_subnets = var.private_subnets
-  public_subnets  = var.public_subnets
+  private_subnets = var.private_subnet
+  public_subnets  = var.public_subnet
 
   enable_nat_gateway = true
   single_nat_gateway = true
-
-  tags = {
-    Terraform   = "true"
-    Environment = "cka-dev-lab"
-  }
+//add tags
 }
