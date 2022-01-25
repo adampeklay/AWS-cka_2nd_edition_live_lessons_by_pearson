@@ -21,6 +21,7 @@ variable "my_current_ip" {
   type        = string
   description = "LOCAL ENV VAR: Needed for ingress security group"
   //export TF_VAR_my_current_ip=$(curl -4 icanhazip.com)/\32
+
 }
 
 variable "cidr" {
@@ -28,6 +29,7 @@ variable "cidr" {
   description = "the CIDR block for the lab"
   default     = "192.168.0.0/16"
 }
+
 
 variable "private_subnet" {
   type        = list(any)

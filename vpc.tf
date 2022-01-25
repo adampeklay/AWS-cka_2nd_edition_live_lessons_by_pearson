@@ -6,6 +6,7 @@ module "cka_lab_vpc" {
   cidr = var.cidr
 
   azs             = [var.region]
+
   private_subnets = var.private_subnet
   public_subnets  = var.public_subnet
 
