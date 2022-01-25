@@ -50,7 +50,7 @@ After terraform is ran, we'll get the public IP of the `kube_controller`, so we 
 ```
 Outputs:
 
-kube_controller_public_ip = "54.91.34.23"
+kube_controller_public_ip = "55.55.55.55"
 ```
 
 ## Usage
@@ -74,8 +74,8 @@ Apply complete! Resources: 18 added, 0 changed, 0 destroyed.
 
 Outputs:
 
-kube_controller_public_ip = "54.91.34.23"
-$ ssh -i ~/.ssh/cka_lab centos@54.91.34.23
+kube_controller_public_ip = "55.55.55.55"
+$ ssh -i ~/.ssh/cka_lab centos@55.55.55.55
 ```
 When you're done, destroy all the resources to keep your AWS bill nice and low.
 ```
