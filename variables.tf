@@ -43,6 +43,18 @@ variable "public_subnet" {
   default     = ["192.168.104.0/24"]
 }
 
+variable "controller_private_ip" {
+  type        = string
+  description = "private controller ip required by the lab"
+  default     = "192.168.104.110"
+}
+
+variable "worker_private_ip" {
+  type        = list(string)
+  description = "private work ips required by the lab"
+  default     = ["192.168.4.111", "192.168.4.112", "192.168.4.113"]
+}
+
 variable "region" {
   type        = string
   description = "The AWS region to deploy the cluster in"

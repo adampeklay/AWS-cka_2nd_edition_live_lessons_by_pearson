@@ -11,6 +11,7 @@ module "kube_controller" {
   monitoring                  = false
   vpc_security_group_ids      = [aws_security_group.cka_lab.id]
   subnet_id                   = module.cka_lab_vpc.public_subnets[0]
+  private_ip                  = var.controller_private_ip
   associate_public_ip_address = true
 
   // add tags
@@ -20,8 +21,8 @@ module "kube_worker" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 3.2"
 
-  count = 3
-  name  = "kube-worker-${count.index}"
+  count = length(var.worker_private_ip)
+  name  = "kube-worker"
 
   ami                    = data.aws_ami.cka_lab_ami.id
   instance_type          = var.worker_instance_type
@@ -29,6 +30,7 @@ module "kube_worker" {
   monitoring             = false
   vpc_security_group_ids = [aws_security_group.cka_lab.id]
   subnet_id              = module.cka_lab_vpc.private_subnets[0]
+  private_ip             = var.worker_private_ip[count.index]
 
   // add tags
 }
