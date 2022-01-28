@@ -41,6 +41,7 @@ TODO:
 
 
 ### INPUTS
+Due to the nature of the lab, there won't be too many inputs for you to provide.  I've included a `tfvars` file that allows you to change the region, in case there is an AWS outage preventing you from using the lab.  All the other variables in `variables.tf` should remain the same as the are spec'd per the lab instructor for lab parity.
 
 TODO:  
 - tfvar inputs
@@ -56,6 +57,7 @@ kube_controller_public_ip = "55.55.55.55"
 ## Usage
 TODO:  
 - instructions for packer after thats all automated
+- packer task, use the link-local address 169.254.169.254 in the packer script to set the hostname based on private IPs set via terraform (linux `at` job).
 - aws cli setup (optional)
 - tfenv (optional)
 - terraform validate, terraform fmt, terraform plan
