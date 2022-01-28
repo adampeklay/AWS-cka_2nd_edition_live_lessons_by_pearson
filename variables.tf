@@ -5,6 +5,18 @@ variable "key_name" {
   default     = "cka_lab"
 }
 
+variable "controller_name" {
+  type = string
+  description = "The kubernetes controller name"
+  default = "kube-controller"
+}
+
+variable "worker_name" {
+  type = string
+  description = "The kubernetes worker names"
+  default = "kube-worker"
+}
+
 variable "controller_instance_type" {
   type        = string
   description = "The instance type for the kubernetes controller instance(s)"

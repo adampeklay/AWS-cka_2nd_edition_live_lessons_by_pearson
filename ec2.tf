@@ -3,7 +3,7 @@ module "kube_controller" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "~> 3.2"
 
-  name = "kube-controller"
+  name = var.controller_name
 
   ami                         = data.aws_ami.cka_lab_ami.id
   instance_type               = var.controller_instance_type
@@ -22,7 +22,7 @@ module "kube_worker" {
   version = "~> 3.2"
 
   count = length(var.worker_private_ip)
-  name  = "kube-worker"
+  name  = "${var.worker_name}-${(count.index)}"
 
   ami                    = data.aws_ami.cka_lab_ami.id
   instance_type          = var.worker_instance_type
@@ -37,6 +37,6 @@ module "kube_worker" {
 
 // ec2 instance key pair - refrerence any local keypair's public key you wish to use
 resource "aws_key_pair" "cka_lab" {
-  key_name   = "cka_lab"
+  key_name   = var.key_name
   public_key = var.public_key
 }
