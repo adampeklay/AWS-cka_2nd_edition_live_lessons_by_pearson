@@ -5,12 +5,12 @@ module "cka_lab_vpc" {
   name = "cka-lab"
   cidr = var.cidr
 
-  azs             = [var.region]
+  azs = [var.region]
 
   private_subnets = var.private_subnet
   public_subnets  = var.public_subnet
 
   enable_nat_gateway = true
   single_nat_gateway = true
-//add tags
+  //add tags
 }
