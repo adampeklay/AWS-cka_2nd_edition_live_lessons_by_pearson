@@ -16,7 +16,7 @@ module "kube_controller" {
 
   // add tags
 }
-  
+
 // private subnet
 module "kube_worker" {
   source  = "terraform-aws-modules/ec2-instance/aws"
