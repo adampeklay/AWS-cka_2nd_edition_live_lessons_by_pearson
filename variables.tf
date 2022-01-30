@@ -32,7 +32,7 @@ variable "worker_instance_type" {
 variable "my_current_ip" {
   type        = string
   description = "LOCAL ENV VAR: Needed for ingress security group"
-  //export TF_VAR_my_current_ip=$(curl -4 icanhazip.com)/\32
+  //export TF_VAR_my_current_ip=$(curl -s -4 icanhazip.com)/\32
 
 }
 
