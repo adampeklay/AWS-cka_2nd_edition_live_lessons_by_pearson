@@ -5,8 +5,8 @@
 #                                       -----------                                      #
 # - Packer sets an at job to run this script when an ec2 instnce is created from the ami #
 # - You can run the script again if need be                                              #
-# - If the script had errors, they will be writtin in your home directory                #
-#   - - See the `else` blocks `echo` string below for details                             #
+# - If the script had errors, a file will be written in your home directory              #
+#   - - See `else` --> `echo` below for details                                          #
 #                                       -----------                                      #
 ##########################################################################################
 
@@ -25,12 +25,22 @@ WORKER_3_IP="192.168.4.113"
 append_hosts_file () {
   # Declare associate array
   declare -A ENTRIES=( [controller]=$CONTROLLER_IP [worker-1]=$WORKER_1_IP [worker-2]=$WORKER_2_IP [worker-3]=$WORKER_3_IP )
-  # Set /etc/hosts.  Can't sudo append text to /etc/hosts - workaround seen below
-  $(sudo cat /etc/hosts >> ~/hosts)
-  for entries in ${!ENTRIES[@]}; do 
-    $(sudo echo "$entries   ${ENTRIES[$entries]}" >> ~/hosts); 
+  # backup original /etc/hosts file to $original_hosts, in case script needs to be ran ad hoc
+  orginal_hosts="~/hosts_orig"
+  staged_hosts="~/hosts
+  # Set /etc/hosts
+  if [ -n $original_hosts ]; then
+    $(touch $staged_hosts && > $staged_hosts)
+  else
+    $(sudo cp /etc/hosts $original_hosts)
+    $(sudo cp /etc/hosts $original_hosts)
+  fi
+  # call arrary to update file
+  for entries in ${!ENTRIES[@]}; do
+    $(sudo echo "$entries   ${ENTRIES[$entries]}" >> $staged_hosts); 
   done
-  $(sudo mv ~/hosts /etc/hosts)
+  # hard update /etc/hosts
+  $(sudo mv $staged_hosts /etc/hosts)
 }
 
 #############################################################
