@@ -1,22 +1,22 @@
 #!/bin/bash
 
-##########################################################################################
-#  This script uses the instructors scripts to create an AMI that terraform will call    #
-#  I've added a few things myself, like the ssh keypair and the at job finish the ec2s   #
-#                                       -----------                                      #
-# Tasks:                                                                                 #
-# ------                                                                                 #
-# - Install required packages                                                            #
-# - Enable and start atd                                                                 #
-# - Clone the instructors repo                                                           #
-# - Run the instructors sripts                                                           #
-# - Remove the cloned repos directory                                                    #
-# - Create an ssh keypair for the cluster                                                #
-# - Set an `at` job that will trigger a script (ec2.sh)                                  #
-# - - ec2.sh will run when the instaces boot after being created via terraform           #
-# - - - ec2.sh will set hostnames and and update /etc/hosts on cluster instances         #
-#                                       -----------                                      #
-##########################################################################################
+##################################################################################################
+#  This script uses the instructors scripts to create an AMI that terraform will call            #
+#  I've added a few things myself, like the ssh keypair and the at job, which finishes the ec2s  #
+#                                       -----------                                              #
+# Tasks:                                                                                         #
+# ------                                                                                         #
+# - Install required packages                                                                    #
+# - Enable and start atd                                                                         #
+# - Clone the instructors repo                                                                   #
+# - Run the instructors sripts                                                                   #
+# - Remove the cloned repos directory                                                            #
+# - Create an ssh keypair for the cluster                                                        #
+# - Set an `at` job that will trigger a script (ec2.sh)                                          #
+# - - ec2.sh will run when the instaces boot after being created via terraform                   #
+# - - - ec2.sh will set hostnames and and update /etc/hosts on cluster instances                 #
+#                                       -----------                                              #
+##################################################################################################
 
 set -x
 
@@ -75,6 +75,7 @@ fi
 echo "cloning the required git rep: $REPO"
 
 git clone $REPO $REPO_DIR
+
 if [ $? -eq 0 ]; then
   echo "git repo cloned"
 else
