@@ -25,14 +25,14 @@ packages=("vim" "git" "bash-completion" "at")
 # Install required packges #
 ############################
 
-logger ": $SCRIPT : installing: ${packages[@]}"
+logger "installing: ${packages[@]}"
 
 sudo yum install "${packages[@]}" -y
 
 if [ $? -eq 0 ]; then
-  logger ": $SCRIPT : packages installed successfully"
+  logger "packages installed successfully"
 else
-  logger ": $SCRIPT : investigate, error installing required packages"
+  logger "investigate, error installing required packages"
   exit 1
 fi
 
@@ -40,14 +40,14 @@ fi
 # Enable and start the at deamon #
 ##################################
 
-logger ": $SCRIPT : enabling and starting atd"
+logger "enabling and starting atd"
 
 sudo systemctl enable --now atd
 
 if [ $? -eq 0 ]; then
-  logger ": $SCRIPT : atd enabled and started succesfully"
+  logger "atd enabled and started succesfully"
 else
-  logger ": $SCRIPT : investigate, error enabling and starting atd"
+  logger "investigate, error enabling and starting atd"
   exit 1
 fi
 
@@ -55,14 +55,14 @@ fi
 # Clone the instructors repo #
 ##############################
 
-logger ": $SCRIPT : cloning the required git rep: $REPO"
+logger "cloning the required git rep: $REPO"
 
 git clone $REPO $REPO_DIR
 
 if [ $? -eq 0 ]; then
-  logger ": $SCRIPT : git repo cloned successfully"
+  logger "git repo cloned successfully"
 else
-  logger ": $SCRIPT : investigate, error cloning github repo"
+  logger "investigate, error cloning github repo"
   exit 1
 fi
 
@@ -70,15 +70,15 @@ fi
 # Run the instructors scripts #
 ###############################
 
-logger ": $SCRIPT : running instructor provided lab setup scripts"
+logger "running instructor provided lab setup scripts"
 
 sudo bash ${REPO_DIR}/${CONTAINER_LAB_SCRIPT} && \
 sudo bash ${REPO_DIR}/${K8S_LAB_SCRIPT}
 
 if [ $? -eq 0 ]; then
-  logger ": $SCRIPT : lab scripts completed succesfully"
+  logger "lab scripts completed succesfully"
 else
-  logger ": $SCRIPT : investigate, error running instructor provided lab scripts"
+  logger "investigate, error running instructor provided lab scripts"
   exit 1
 fi
 
@@ -86,14 +86,14 @@ fi
 # Cleanup - remove github repo directory #
 ##########################################
 
-logger ": $SCRIPT : deleting ${HOME}/${REPO_DIR}"
+logger "deleting ${HOME}/${REPO_DIR}"
 
 sudo rm -rf ${HOME}/${REPO_DIR}
 
 if [ $? -eq 0 ]; then
-  logger ": $SCRIPT : ${HOME}/${REPO_DIR} deletion success"
+  logger "${HOME}/${REPO_DIR} deletion success"
 else
-  logger ": $SCRIPT : ${HOME}/${REPO_DIR} deletion failure"
+  logger "${HOME}/${REPO_DIR} deletion failure"
   exit 1
 fi
 
@@ -104,9 +104,9 @@ fi
 ssh-keygen -t rsa -b 2048 -N '' -f ${HOME}/.ssh/${CLUSTER_KEY}
 
 if [ $? -eq 0 ]; then
-  logger ": $SCRIPT : $CLUSTER_KEY keypair created in ${HOME}/.ssh/ successfully"
+  logger "$CLUSTER_KEY keypair created in ${HOME}/.ssh/ successfully"
 else
-  logger ": $SCRIPT : investigate, error creating ssh keypair"
+  logger "investigate, error creating ssh keypair"
   exit 1
 fi
 
@@ -117,12 +117,12 @@ fi
 sudo at now +2 minute -f $HOME/ec2.sh
 
 if [ $? -eq 0 ]; then
-   logger ": $SCRIPT : at job scheduled successfully, hostnames will be set upon ec2 creation"
+   logger "at job scheduled successfully, hostnames will be set upon ec2 creation"
 else
-   logger ": $SCRIPT : investigate, error setting at job"
+   logger "investigate, error setting at job"
    exit 1
 fi
 
-logger ": $SCRIPT : finished script ${HOME}/${SCRIPT}"
+logger "finished script ${HOME}/${SCRIPT}"
 
 exit 0
