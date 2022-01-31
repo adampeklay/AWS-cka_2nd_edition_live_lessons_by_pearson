@@ -7,8 +7,6 @@
 #                                       -----------                                         #
 #############################################################################################
 
-set -x
-
 # Variables
 
 LOCAL_IP="$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)"
@@ -27,17 +25,19 @@ append_hosts_file () {
   done
 }
 
+logger ": ${SCRIPT} : started script ${HOME}/${SCRIPT}"
+
 #####################
 # Update /etc/hosts #
 #####################
 
-logger -s "${SCRIPT}: appending cluster hosts and private ips to /etc/hosts"
+logger ": ${SCRIPT} : appending cluster hosts and private ips to /etc/hosts"
 
 append_hosts_file
 if [ $? -eq 0 ]; then
-  logger -s "${SCRIPT}: /etc/hosts updated successfully"
+  logger ": ${SCRIPT} : /etc/hosts updated successfully"
 else
-  logger -s "${SCRIPT}: investigate, error running append_hosts_file function"
+  logger ": ${SCRIPT} : investigate, error running append_hosts_file function"
   exit 1
 fi
 
@@ -45,42 +45,42 @@ fi
 # Set hostnames on cluster instances #
 ######################################
 
-logger -s "${SCRIPT}: setting cluster hostnames"
+logger ": ${SCRIPT} : setting cluster hostnames"
 
 if [[ $LOCAL_IP == $CONTROLLER_IP ]]; then
   sudo hostnamectl set-hostname controller
   if [ $? -eq 0 ]; then
-    logger -s "${SCRIPT}: controller hostname set successfully"
-  elif
-    logger -s "${SCRIPT}: investigate, error setting controller hostname"
+    logger ": ${SCRIPT} : controller hostname set successfully"
+  else
+    logger ": ${SCRIPT} : investigate, error setting controller hostname"
     exit 1
   fi
 elif [[ $LOCAL_IP == $WORKER_1_IP ]]; then
   sudo hostnamectl set-hostname worker-1
   if [ $? -eq 0 ]; then
-    logger -s "${SCRIPT}: worker-1 hostname set successfully"
-  elif
-    logger -s "${SCRIPT}: investigate, error setting worker-1 hostname"
+    logger ": ${SCRIPT} : worker-1 hostname set successfully"
+  else
+    logger ": ${SCRIPT} : investigate, error setting worker-1 hostname"
     exit 1
   fi
 elif [[ $LOCAL_IP == $WORKER_2_IP ]]; then
   sudo hostnamectl set-hostname worker-2
   if [ $? -eq 0 ]; then
-    logger -s "${SCRIPT}: worker-2 hostname set successfully"
-  elif
-    logger -s "${SCRIPT}: investigate, error setting worker-2 hostname"
+    logger ": ${SCRIPT} : worker-2 hostname set successfully"
+  else
+    logger ": ${SCRIPT} : investigate, error setting worker-2 hostname"
     exit 1
   fi
 elif [[ $LOCAL_IP == $WORKER_3_IP ]]; then
   sudo hostnamectl set-hostname worker-3
   if [ $? -eq 0 ]; then
-    logger -s "${SCRIPT}: worker-3 hostname set successfully"
-  elif
-    logger -s "${SCRIPT}: investigate, error setting worker-3 hostname"
+    logger ": ${SCRIPT} : worker-3 hostname set successfully"
+  else
+    logger ": ${SCRIPT} : investigate, error setting worker-3 hostname"
     exit 1
   fi
 else
-  logger -s "${SCRIPT}: investigate error(s), instance private IP(s) aren't what's expected in `../variables.tf`"
+  logger ": ${SCRIPT} : investigate error(s), instance private IP(s) aren't matching"
   exit 1
 fi
 
@@ -88,14 +88,16 @@ fi
 # delete this script 1 minute from now #
 ########################################
 
-logger -s "${SCRIPT}: the script has ran all tasks successfully, setting an at job to delete myself (${HOME}/${SCRIPT})"
+logger ": ${SCRIPT} : setting at job to delete myself (file: ${HOME}/${SCRIPT})"
 
 echo "rm -f ${HOME}/${SCRIPT}" | at now +1 minute
-if [ $? -eq 0]; then
-  logger -s "${SCRIPT}: job scheduled succesfully, self destructing in 1 minute, goodbye"
+if [ $? -eq 0 ]; then
+  logger ": ${SCRIPT} : job scheduled succesfully"
 else
-  logger -s "${SCRIPT}: investigate, error scheduling self deletion"
+  logger ": ${SCRIPT} : investigate, error scheduling self deletion"
   exit 1
 fi
+
+logger ": ${SCRIPT} : finished script ${HOME}/${SCRIPT}"
 
 exit 0
