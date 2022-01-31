@@ -4,7 +4,6 @@
 #    This script finishes configuring the ec2 instances per the instructors requirements    #
 #                                       -----------                                         #
 #  Packer sets an `at`` job to run this script when an ec2 instnce is created from the ami  #
-#                                       -----------                                         #
 #############################################################################################
 
 # Variables
@@ -24,8 +23,6 @@ append_hosts_file () {
     echo "$entries   ${ENTRIES[$entries]}" | sudo tee -a /etc/hosts; 
   done
 }
-
-logger ": ${SCRIPT} : started script ${HOME}/${SCRIPT}"
 
 #####################
 # Update /etc/hosts #
@@ -85,7 +82,7 @@ else
 fi
 
 ########################################
-# delete this script 1 minute from now #
+# Delete this script 1 minute from now #
 ########################################
 
 logger ": ${SCRIPT} : setting at job to delete myself (file: ${HOME}/${SCRIPT})"
