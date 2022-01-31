@@ -66,7 +66,7 @@ echo "script completed succesfully, self destructing in 1 minute"
 echo "sudo rm -f $HOME/$DIRNAME" | at now +1 minute
 
 if [ $? -eq 0]; then
-  echo "self destruction scheduled for 1 minute from now, goodbye"
+  echo "self destruction successfully scheduled for 1 minute from now, goodbye"
 else
   echo "investigate, error scheduling self deletion"
   exit 1
