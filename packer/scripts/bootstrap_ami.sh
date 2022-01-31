@@ -2,20 +2,8 @@
 
 ##################################################################################################
 #       This script uses the instructors scripts to create an AMI that terraform will call       #
+#                                       -----------                                              #
 #  I've added a few things myself, like the ssh keypair and the at job, which finishes the ec2s  #
-#                                       -----------                                              #
-# Tasks:                                                                                         #
-# ------                                                                                         #
-# - Install required packages                                                                    #
-# - Enable and start atd                                                                         #
-# - Clone the instructors repo                                                                   #
-# - Run the instructors sripts                                                                   #
-# - Remove the cloned repos directory                                                            #
-# - Create an ssh keypair for the cluster                                                        #
-# - Set an `at` job that will trigger a script (ec2.sh)                                          #
-# - - ec2.sh will run when the instaces boot after being created via terraform                   #
-# - - - ec2.sh will set hostnames and and update /etc/hosts on cluster instances                 #
-#                                       -----------                                              #
 ##################################################################################################
 
 set -x
@@ -33,8 +21,6 @@ SCRIPT="$0"
 
 packages=("vim" "git" "bash-completion" "at")
 
-logger ": ${SCRIPT} : started script ${HOME}/${SCRIPT}"
-
 ############################
 # Install required packges #
 ############################
@@ -50,7 +36,9 @@ else
   exit 1
 fi
 
-# Enable and start the at deamon
+##################################
+# Enable and start the at deamon #
+##################################
 
 logger ": ${SCRIPT} : enabling and starting atd"
 
@@ -63,7 +51,9 @@ else
   exit 1
 fi
 
-# Clone the instructors repo
+##############################
+# Clone the instructors repo #
+##############################
 
 logger ": ${SCRIPT} : cloning the required git rep: $REPO"
 
@@ -76,7 +66,9 @@ else
   exit 1
 fi
 
-# Run the instructors scripts
+###############################
+# Run the instructors scripts #
+###############################
 
 logger ": ${SCRIPT} : running instructor provided lab setup scripts"
 
@@ -90,9 +82,11 @@ else
   exit 1
 fi
 
-# Clean up after ourselves
+##########################################
+# Cleanup - remove github repo directory #
+##########################################
 
-logger ": ${SCRIPT} : housekeeping: deleting $HOME/${REPO_DIR}"
+logger ": ${SCRIPT} : deleting $HOME/${REPO_DIR}"
 
 sudo rm -rf $HOME/${REPO_DIR}
 
@@ -103,7 +97,9 @@ else
   exit 1
 fi
 
-# Create cluster ssh keypair
+##############################
+# Create cluster ssh keypair #
+##############################
 
 ssh-keygen -t rsa -b 2048 -N '' -f $HOME/.ssh/${CLUSTER_KEY}
 
@@ -114,7 +110,9 @@ else
   exit 1
 fi
 
-# Set the at job to run the script 2 minutes from now
+#######################################################
+# Set the at job to run the script 2 minutes from now #
+#######################################################
 
 sudo at now +2 minute -f $HOME/ec2.sh
 
