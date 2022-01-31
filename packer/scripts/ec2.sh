@@ -16,6 +16,7 @@ CONTROLLER_IP="192.168.104.110"
 WORKER_1_IP="192.168.4.111"
 WORKER_2_IP="192.168.4.112"
 WORKER_3_IP="192.168.4.113"
+DIRNAME="$0"
 
 # Functions
 
@@ -35,7 +36,7 @@ append_hosts_file
 if [ $? -eq 0 ]; then
   echo "/etc/hosts updated successfully"
 else
-  echo "investigate, error running append_hosts function"
+  echo "investigate, error running append_hosts_file function"
   exit 1
 fi
 
@@ -45,21 +46,30 @@ fi
 
 if [[ $LOCAL_IP == $CONTROLLER_IP ]]; then
   sudo hostnamectl set-hostname controller
-  echo "hostname set successfully"
+  echo "controller hostname set successfully"
 elif [[ $LOCAL_IP == $WORKER_1_IP ]]; then
   sudo hostnamectl set-hostname worker-1
-  echo "hostname set successfully"
+  echo "worker hostname set successfully"
 elif [[ $LOCAL_IP == $WORKER_2_IP ]]; then
   sudo hostnamectl set-hostname worker-2
-  echo "hostname set successfully"
+  echo "worker hostname set successfully"
 elif [[ $LOCAL_IP == $WORKER_3_IP ]]; then
   sudo hostnamectl set-hostname worker-3
-  echo "hostname set successfully"
+  echo "worker hostname set successfully"
 else
   echo "investigate, error updating hostname(s)"
   exit 1
 fi
 
-echo "script completed succesfully"
+echo "script completed succesfully, self destructing in 1 minute"
+
+echo "sudo rm -f $HOME/$DIRNAME" | at now +1 minute
+
+if [ $? -eq 0]; then
+  echo "self destruction scheduled for 1 minute from now, goodbye"
+else
+  echo "investigate, error scheduling self deletion"
+  exit 1
+fi
 
 exit 0

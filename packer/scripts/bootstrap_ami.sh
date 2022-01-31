@@ -28,12 +28,9 @@ REPO="https://github.com/sandervanvugt/cka.git"
 CONTAINER_LAB_SCRIPT="setup-container.sh"
 K8S_LAB_SCRIPT="setup-kubetools.sh"
 
-# Functions
+# Arrays
 
-install_packages () {
-  packages=("vim" "git" "bash-completion" "at")
-  sudo yum install "${packages[@]}" -y;
-}
+packages=("vim" "git" "bash-completion" "at")
 
 #############
 # Run tasks #
@@ -41,9 +38,9 @@ install_packages () {
 
 # Install required packges
 
-echo "installing: "${packages[@]}""
+echo "installing: " "${packages[@]}"
 
-install_packages
+sudo yum install "${packages[@]}" -y
 
 if [ $? -eq 0 ]; then
   echo "packages installed successfully"
