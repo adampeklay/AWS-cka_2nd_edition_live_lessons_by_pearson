@@ -33,101 +33,98 @@ SCRIPT="$0"
 
 packages=("vim" "git" "bash-completion" "at")
 
+logger ": ${SCRIPT} : started script ${HOME}/${SCRIPT}"
+
 ############################
 # Install required packges #
 ############################
 
-logger -s "installing required packages: ${packages[@]}"
+logger ": ${SCRIPT} : installing: ${packages[@]}"
 
 sudo yum install "${packages[@]}" -y
+
 if [ $? -eq 0 ]; then
-  logger -s "${SCRIPT}: packages installed successfully"
+  logger ": ${SCRIPT} : packages installed successfully"
 else
-  logger -s "${SCRIPT}: investigate, error installing required packages"
+  logger ": ${SCRIPT} : investigate, error installing required packages"
   exit 1
 fi
 
-##################################
-# Enable and start the at deamon #
-##################################
+# Enable and start the at deamon
 
-logger -s "enabling and starting atd"
+logger ": ${SCRIPT} : enabling and starting atd"
 
 sudo systemctl enable --now atd
+
 if [ $? -eq 0 ]; then
-  logger -s "${SCRIPT}: atd enabled and started succesfully"
+  logger ": ${SCRIPT} : atd enabled and started succesfully"
 else
-  logger -s "${SCRIPT}: investigate, error enabling and starting atd"
+  logger ": ${SCRIPT} : investigate, error enabling and starting atd"
   exit 1
 fi
 
-##############################
-# Clone the instructors repo #
-##############################
+# Clone the instructors repo
 
-logger -s "${SCRIPT}: cloning the instructors git rep: $REPO"
+logger ": ${SCRIPT} : cloning the required git rep: $REPO"
 
 git clone $REPO $REPO_DIR
+
 if [ $? -eq 0 ]; then
-  logger -s "${SCRIPT}: $REPO repo cloned successfully"
+  logger ": ${SCRIPT} : git repo cloned successfully"
 else
-  logger -s "${SCRIPT}: investigate, error cloning $REPO repo"
+  logger ": ${SCRIPT} : investigate, error cloning github repo"
   exit 1
 fi
 
-###############################
-# Run the instructors scripts #
-###############################
+# Run the instructors scripts
 
-logger -s "${SCRIPT}: running instructor provided lab setup scripts"
+logger ": ${SCRIPT} : running instructor provided lab setup scripts"
 
 sudo bash ${REPO_DIR}/${CONTAINER_LAB_SCRIPT} && \
 sudo bash ${REPO_DIR}/${K8S_LAB_SCRIPT}
+
 if [ $? -eq 0 ]; then
-  logger -s "${SCRIPT}: lab scripts completed succesfully"
+  logger ": ${SCRIPT} : lab scripts completed succesfully"
 else
-  logger -s "${SCRIPT}: investigate, error running instructor provided lab scripts"
+  logger ": ${SCRIPT} : investigate, error running instructor provided lab scripts"
   exit 1
 fi
 
-############################
-# Clean up after ourselves #
-############################
+# Clean up after ourselves
 
-logger -s "${SCRIPT}: housekeeping: deleting $HOME/${REPO_DIR}"
+logger ": ${SCRIPT} : housekeeping: deleting $HOME/${REPO_DIR}"
 
 sudo rm -rf $HOME/${REPO_DIR}
+
 if [ $? -eq 0 ]; then
-  logger -s "${SCRIPT}: cleanup success"
+  logger ": ${SCRIPT} : $HOME/${REPO_DIR} deletion success"
 else
-  logger -s "${SCRIPT}: cleanup failure"
+  logger ": ${SCRIPT} : $HOME/${REPO_DIR} deletion failure"
   exit 1
 fi
 
-##############################
-# Create cluster ssh keypair #
-##############################
-
-logger -s "${SCRIPT}: creating $CLUSTER_KEY keypair $HOME/.ssh/"
+# Create cluster ssh keypair
 
 ssh-keygen -t rsa -b 2048 -N '' -f $HOME/.ssh/${CLUSTER_KEY}
+
 if [ $? -eq 0 ]; then
-  logger -s "${SCRIPT}: $CLUSTER_KEY keypair created in $HOME/.ssh/ successfully"
+  logger ": ${SCRIPT} : $CLUSTER_KEY keypair created in $HOME/.ssh/ successfully"
 else
-  logger -s "${SCRIPT}: investigate, error creating ssh keypair"
+  logger ": ${SCRIPT} : investigate, error creating ssh keypair"
   exit 1
 fi
 
-#######################################################
-# Set the at job to run the script 2 minutes from now #
-#######################################################
-
-logger -s "${SCRIPT}: scheduling at job"
+# Set the at job to run the script 2 minutes from now
 
 sudo at now +2 minute -f $HOME/ec2.sh
+
 if [ $? -eq 0 ]; then
-   logger -s "${SCRIPT}: at job scheduled successfully, hostnames will be set upon ec2 creation"
+   logger ": ${SCRIPT} : at job scheduled successfully, hostnames will be set upon ec2 creation"
 else
-   logger -s "${SCRIPT}: investigate, error setting at job"
+   logger ": ${SCRIPT} : investigate, error setting at job"
    exit 1
 fi
+
+logger ": ${SCRIPT} : finished script ${HOME}/${SCRIPT}"
+
+exit 0
