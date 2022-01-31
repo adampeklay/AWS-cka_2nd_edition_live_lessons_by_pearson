@@ -27,99 +27,107 @@ CLUSTER_KEY="cluster_key_rsa"
 REPO="https://github.com/sandervanvugt/cka.git"
 CONTAINER_LAB_SCRIPT="setup-container.sh"
 K8S_LAB_SCRIPT="setup-kubetools.sh"
+SCRIPT="$0"
 
 # Arrays
 
 packages=("vim" "git" "bash-completion" "at")
 
-#############
-# Run tasks #
-#############
+############################
+# Install required packges #
+############################
 
-# Install required packges
-
-echo "installing: " "${packages[@]}"
+logger -s "installing required packages: ${packages[@]}"
 
 sudo yum install "${packages[@]}" -y
-
 if [ $? -eq 0 ]; then
-  echo "packages installed successfully"
+  logger -s "${SCRIPT}: packages installed successfully"
 else
-  echo "investigate, error installing required packages"
+  logger -s "${SCRIPT}: investigate, error installing required packages"
   exit 1
 fi
 
-# Enable and start the at deamon
+##################################
+# Enable and start the at deamon #
+##################################
 
-echo "enabling and starting atd"
+logger -s "enabling and starting atd"
 
 sudo systemctl enable --now atd
-
 if [ $? -eq 0 ]; then
-  echo "atd enabled and started succesfully"
+  logger -s "${SCRIPT}: atd enabled and started succesfully"
 else
-  echo "investigate, error enabling and starting atd"
+  logger -s "${SCRIPT}: investigate, error enabling and starting atd"
   exit 1
 fi
 
-# Clone the instructors repo
+##############################
+# Clone the instructors repo #
+##############################
 
-echo "cloning the required git rep: $REPO"
+logger -s "${SCRIPT}: cloning the instructors git rep: $REPO"
 
 git clone $REPO $REPO_DIR
-
 if [ $? -eq 0 ]; then
-  echo "git repo cloned successfully"
+  logger -s "${SCRIPT}: $REPO repo cloned successfully"
 else
-  echo "investigate, error cloning github repo"
+  logger -s "${SCRIPT}: investigate, error cloning $REPO repo"
   exit 1
 fi
 
-# Run the instructors scripts
+###############################
+# Run the instructors scripts #
+###############################
 
-echo "running instructor provided lab setup scripts"
+logger -s "${SCRIPT}: running instructor provided lab setup scripts"
 
 sudo bash ${REPO_DIR}/${CONTAINER_LAB_SCRIPT} && \
 sudo bash ${REPO_DIR}/${K8S_LAB_SCRIPT}
-
 if [ $? -eq 0 ]; then
-  echo "lab scripts completed succesfully"
+  logger -s "${SCRIPT}: lab scripts completed succesfully"
 else
-  echo "investigate, error running instructor provided lab scripts"
+  logger -s "${SCRIPT}: investigate, error running instructor provided lab scripts"
   exit 1
 fi
 
-# Clean up after ourselves
+############################
+# Clean up after ourselves #
+############################
 
-echo "housekeeping: deleting $HOME/${REPO_DIR}"
+logger -s "${SCRIPT}: housekeeping: deleting $HOME/${REPO_DIR}"
 
 sudo rm -rf $HOME/${REPO_DIR}
-
 if [ $? -eq 0 ]; then
-  echo "cleanup success"
+  logger -s "${SCRIPT}: cleanup success"
 else
-  echo "cleanup failure"
+  logger -s "${SCRIPT}: cleanup failure"
   exit 1
 fi
 
-# Create cluster ssh keypair
+##############################
+# Create cluster ssh keypair #
+##############################
+
+logger -s "${SCRIPT}: creating $CLUSTER_KEY keypair $HOME/.ssh/"
 
 ssh-keygen -t rsa -b 2048 -N '' -f $HOME/.ssh/${CLUSTER_KEY}
-
 if [ $? -eq 0 ]; then
-  echo "$CLUSTER_KEY keypair created in $HOME/.ssh/ successfully"
+  logger -s "${SCRIPT}: $CLUSTER_KEY keypair created in $HOME/.ssh/ successfully"
 else
-  echo "investigate, error creating ssh keypair"
+  logger -s "${SCRIPT}: investigate, error creating ssh keypair"
   exit 1
 fi
 
-# Set the at job to run the script 2 minutes from now
+#######################################################
+# Set the at job to run the script 2 minutes from now #
+#######################################################
+
+logger -s "${SCRIPT}: scheduling at job"
 
 sudo at now +2 minute -f $HOME/ec2.sh
-
 if [ $? -eq 0 ]; then
-   echo "at job scheduled successfully, hostnames will be set upon ec2 creation"
+   logger -s "${SCRIPT}: at job scheduled successfully, hostnames will be set upon ec2 creation"
 else
-   echo "investigate, error setting at job"
+   logger -s "${SCRIPT}: investigate, error setting at job"
    exit 1
 fi

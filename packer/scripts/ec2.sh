@@ -16,7 +16,7 @@ CONTROLLER_IP="192.168.104.110"
 WORKER_1_IP="192.168.4.111"
 WORKER_2_IP="192.168.4.112"
 WORKER_3_IP="192.168.4.113"
-DIRNAME="$0"
+SCRIPT="$0"
 
 # Functions
 
@@ -31,12 +31,13 @@ append_hosts_file () {
 # Update /etc/hosts #
 #####################
 
-append_hosts_file
+logger -s "${SCRIPT}: appending cluster hosts and private ips to /etc/hosts"
 
+append_hosts_file
 if [ $? -eq 0 ]; then
-  echo "/etc/hosts updated successfully"
+  logger -s "${SCRIPT}: /etc/hosts updated successfully"
 else
-  echo "investigate, error running append_hosts_file function"
+  logger -s "${SCRIPT}: investigate, error running append_hosts_file function"
   exit 1
 fi
 
@@ -44,31 +45,56 @@ fi
 # Set hostnames on cluster instances #
 ######################################
 
+logger -s "${SCRIPT}: setting cluster hostnames"
+
 if [[ $LOCAL_IP == $CONTROLLER_IP ]]; then
   sudo hostnamectl set-hostname controller
-  echo "controller hostname set successfully"
+  if [ $? -eq 0 ]; then
+    logger -s "${SCRIPT}: controller hostname set successfully"
+  elif
+    logger -s "${SCRIPT}: investigate, error setting controller hostname"
+    exit 1
+  fi
 elif [[ $LOCAL_IP == $WORKER_1_IP ]]; then
   sudo hostnamectl set-hostname worker-1
-  echo "worker hostname set successfully"
+  if [ $? -eq 0 ]; then
+    logger -s "${SCRIPT}: worker-1 hostname set successfully"
+  elif
+    logger -s "${SCRIPT}: investigate, error setting worker-1 hostname"
+    exit 1
+  fi
 elif [[ $LOCAL_IP == $WORKER_2_IP ]]; then
   sudo hostnamectl set-hostname worker-2
-  echo "worker hostname set successfully"
+  if [ $? -eq 0 ]; then
+    logger -s "${SCRIPT}: worker-2 hostname set successfully"
+  elif
+    logger -s "${SCRIPT}: investigate, error setting worker-2 hostname"
+    exit 1
+  fi
 elif [[ $LOCAL_IP == $WORKER_3_IP ]]; then
   sudo hostnamectl set-hostname worker-3
-  echo "worker hostname set successfully"
+  if [ $? -eq 0 ]; then
+    logger -s "${SCRIPT}: worker-3 hostname set successfully"
+  elif
+    logger -s "${SCRIPT}: investigate, error setting worker-3 hostname"
+    exit 1
+  fi
 else
-  echo "investigate, error updating hostname(s)"
+  logger -s "${SCRIPT}: investigate error(s), instance private IP(s) aren't what's expected in `../variables.tf`"
   exit 1
 fi
 
-echo "script completed succesfully, self destructing in 1 minute"
+########################################
+# delete this script 1 minute from now #
+########################################
 
-echo "sudo rm -f $HOME/$DIRNAME" | at now +1 minute
+logger -s "${SCRIPT}: the script has ran all tasks successfully, setting an at job to delete myself (${HOME}/${SCRIPT})"
 
+echo "rm -f ${HOME}/${SCRIPT}" | at now +1 minute
 if [ $? -eq 0]; then
-  echo "self destruction successfully scheduled for 1 minute from now, goodbye"
+  logger -s "${SCRIPT}: job scheduled succesfully, self destructing in 1 minute, goodbye"
 else
-  echo "investigate, error scheduling self deletion"
+  logger -s "${SCRIPT}: investigate, error scheduling self deletion"
   exit 1
 fi
 
