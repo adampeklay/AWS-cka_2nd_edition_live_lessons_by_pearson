@@ -5,6 +5,9 @@ Packer AMI code and Terraform root modules used to spin up a CKA cluster, spec'd
 ### General information
 WIP 
 
+TODO:  
+
+- PACKER: var for packer owner / aws cli to script for centos AMI. Get the owner string for var definition, subscribe, etc
 
 Each AWS resource is a Terraform root module, which is created by calling modules from various [terraform-aws-modules](https://github.com/terraform-aws-modules) repositories.  
 
@@ -32,13 +35,6 @@ export TF_VAR_my_current_ip=$(curl -4 icanhazip.com)\/32
 export TF_VAR_public_key="your public key you created in quotes"
 
 ```
-TODO:  
-
-- VPC: update config, controller node can't hit the internet
-- - subnet route table: create one so private and public subnet can talk to eachother
-- PACKER: var for packer owner / aws cli to script for centos AMI. Get the owner string for var definition, subscribe, etc
-- - README in packer directory
-- tags in general
 
 ### INPUTS
 Due to the nature of the lab, there won't be too many inputs for you to provide.  I've included a `tfvars` file that allows you to change the region, in case there is an AWS outage preventing you from using the lab.  All the other variables in `variables.tf` should remain the same as the are spec'd per the lab instructor for lab parity.

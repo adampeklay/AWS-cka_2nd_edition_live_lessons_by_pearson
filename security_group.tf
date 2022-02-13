@@ -1,6 +1,6 @@
 resource "aws_security_group" "cka_lab" {
-  name        = "cka lab"
-  description = "allows instances to communicate with eachother, ssh from home"
+  name        = var.lab_name
+  description = "allows instances to communicate with eachother, ssh from home, outbound internet"
   vpc_id      = module.cka_lab_vpc.vpc_id
 
   ingress = [
@@ -11,7 +11,7 @@ resource "aws_security_group" "cka_lab" {
       protocol         = "-1"
       cidr_blocks      = []
       self             = true
-      ipv6_cidr_blocks = [] #
+      ipv6_cidr_blocks = []
       prefix_list_ids  = []
       security_groups  = []
     },
@@ -27,8 +27,14 @@ resource "aws_security_group" "cka_lab" {
       self             = false
     }
   ]
-
-  tags = {
-    Name = "cka lab"
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
+
+  tags = var.lab_tags
+
 }
