@@ -33,7 +33,6 @@ module "kube_worker" {
   subnet_id              = module.cka_lab_vpc.private_subnets[0]
   private_ip             = var.worker_private_ip[count.index]
 
-  // add tags
 }
 
 // ec2 instance key pair - refrerence any local keypair's public key you wish to use
