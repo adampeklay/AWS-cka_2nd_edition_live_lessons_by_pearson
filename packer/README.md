@@ -1,12 +1,5 @@
 ## Packer usage
-WIP  
-
-To do:  
-
-key based auth:  
-
-- `.ssh/authorized_keys`
-- `.ssh/config`  
+WIP - add note about subscribing to centos ami
 
 `packer fmt .`  
 
