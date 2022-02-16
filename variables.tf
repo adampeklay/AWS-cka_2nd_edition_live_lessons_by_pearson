@@ -67,13 +67,12 @@ variable "worker_private_ip" {
 
 variable "region" {
   type        = string
-  description = "The AWS region to deploy the cluster in"
+  description = "The AWS region to deploy the cluster in.  Set in cka_lab.tfvars."
 }
 
 variable "public_key" {
   type        = string
-  description = "LOCAL ENV VAR: used for ssh key based auth to the k8s controller node"
-  //export TF_var_public_key="your public key in quotes"
+  description = "used for ssh key based auth to the k8s controller node.  Set in cka_lab.tfvars."
 }
 
 variable "lab_name" {

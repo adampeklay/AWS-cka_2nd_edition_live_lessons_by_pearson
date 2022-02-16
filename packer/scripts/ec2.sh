@@ -3,7 +3,7 @@
 #############################################################################################
 #    This script finishes configuring the ec2 instances per the instructors requirements    #
 #                                       -----------                                         #
-#  Packer sets an `at`` job to run this script when an ec2 instnce is created from the ami  #
+#  Packer set an `at`  job to run this script when an ec2 instnce is created from the ami   #
 #############################################################################################
 
 # Variables
@@ -20,7 +20,7 @@ SCRIPT="$0"
 append_hosts_file () {
   declare -A ENTRIES=( [controller]=${CONTROLLER_IP} [worker-1]=${WORKER_1_IP} [worker-2]=${WORKER_2_IP} [worker-3]=${WORKER_3_IP} )
   for entries in ${!ENTRIES[@]}; do
-    echo "${ENTRIES[$entries]}   $entries" | sudo tee -a /etc/hosts; 
+    echo "${ENTRIES[$entries]}   $entries" | sudo tee -a /etc/hosts;
   done
 }
 
@@ -85,16 +85,16 @@ fi
 # Delete this script 1 minute from now #
 ########################################
 
-logger "setting at job to delete myself (file: $HOME/${SCRIPT})"
+logger "setting at job to delete myself (file: ${HOME}/${SCRIPT})"
 
-echo "rm -f $HOME/${SCRIPT}" | sudo at now +1 minute)
+echo "sudo rm -f ${HOME}/${SCRIPT}" | sudo at now +1 minute
 if [ $? -eq 0 ]; then
-  logger "job scheduled succesfully"
+  logger "job scheduled successfully"
 else
   logger "investigate, error scheduling self deletion"
   exit 1
 fi
 
-logger "finished script $HOME/${SCRIPT}"
+logger "all tasks completed successfully"
 
 exit 0

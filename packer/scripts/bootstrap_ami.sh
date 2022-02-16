@@ -45,7 +45,7 @@ logger "enabling and starting atd"
 sudo systemctl enable --now atd
 
 if [ $? -eq 0 ]; then
-  logger "atd enabled and started succesfully"
+  logger "atd enabled and started successfully"
 else
   logger "investigate, error enabling and starting atd"
   exit 1
@@ -76,7 +76,7 @@ sudo bash ${REPO_DIR}/${CONTAINER_LAB_SCRIPT} && \
 sudo bash ${REPO_DIR}/${K8S_LAB_SCRIPT}
 
 if [ $? -eq 0 ]; then
-  logger "lab scripts completed succesfully"
+  logger "lab scripts completed successfully"
 else
   logger "investigate, error running instructor provided lab scripts"
   exit 1
@@ -110,6 +110,63 @@ else
   exit 1
 fi
 
+#####################################
+# create and update authorized_keys #
+#####################################
+
+cat ${HOME}/.ssh/${CLUSTER_KEY}.pub >> ${HOME}/.ssh/authorized_keys
+
+if [ $? -eq 0 ]; then
+  logger "${HOME}/.ssh/authorized_keys created and updated successfully"
+else
+  logger "investigate, error creating and updating ${HOME}/.ssh/authorized_keys"
+  exit 1
+fi
+
+#################################
+# create and udpate .ssh/config #
+#################################
+
+cat << EOF > ${HOME}/.ssh/config
+Host controller
+  Hostname controller
+  User centos
+  IdentityFile ~/.ssh/cluster_key_rsa
+Host worker-1
+  HostName worker-1
+Host worker-2
+  HostName worker-2
+Host worker-3
+  HostName worker-3
+Host worker-*
+  Hostname worker-*
+  User centos
+  IdentityFile ~/.ssh/cluster_key_rsa
+EOF
+
+if [ $? -eq 0 ]; then
+   logger "${HOME}/.ssh/config created and updated successfully"
+else
+   logger "investigate, error creating and updating ${HOME}/.ssh/config"
+   exit 1
+fi
+
+chmod 600  ${HOME}/.ssh/config
+
+if [ $? -eq 0 ]; then
+   logger "${HOME}/.ssh/config permissions updated successfully"
+else
+   logger "investigate, error updating ${HOME}/.ssh/config permissions"
+   exit 1
+fi
+
+if [ $? -eq 0 ]; then
+   logger "at job scheduled successfully, hostnames will be set upon ec2 creation"
+else
+   logger "investigate, error setting at job"
+   exit 1
+fi
+
 #######################################################
 # Set the at job to run the script 2 minutes from now #
 #######################################################
@@ -123,6 +180,6 @@ else
    exit 1
 fi
 
-logger "finished script ${HOME}/${SCRIPT}"
+logger "all tasks completed successfully"
 
 exit 0
