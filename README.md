@@ -7,7 +7,7 @@ Each AWS resource is a Terraform root module, which is created by calling module
 
 The `packer` directory has a brief README as well.  You can read this README top down to get this lab built fairly quickly.  
 
-You will be instructed to start in the `packer` directory to get the AMI build, further below.  
+You will be instructed to start in the `packer` directory to get the AMI built, further below.  
 
 ## Local requirements
 - Install Packer, I used version `1.7.8`
