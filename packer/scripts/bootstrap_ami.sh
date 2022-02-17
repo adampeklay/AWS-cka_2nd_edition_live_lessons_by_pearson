@@ -101,6 +101,8 @@ fi
 # Create cluster ssh keypair #
 ##############################
 
+logger "performing ssh related tasks"
+
 ssh-keygen -t rsa -b 2048 -N '' -f ${HOME}/.ssh/${CLUSTER_KEY}
 
 if [ $? -eq 0 ]; then
@@ -160,21 +162,16 @@ else
    exit 1
 fi
 
-if [ $? -eq 0 ]; then
-   logger "at job scheduled successfully, hostnames will be set upon ec2 creation"
-else
-   logger "investigate, error setting at job"
-   exit 1
-fi
-
 #######################################################
 # Set the at job to run the script 2 minutes from now #
 #######################################################
 
-sudo at now +2 minute -f $HOME/${SCRIPT}
+logger "setting at job to set hostnames, and update /etc/hosts upon instance creation"
+
+sudo at now +2 minute -f $HOME/ec2.sh
 
 if [ $? -eq 0 ]; then
-   logger "at job scheduled successfully, hostnames will be set upon ec2 creation"
+   logger "at job scheduled successfully, hostnames and /etc/hosts will be modified upon ec2 creation"
 else
    logger "investigate, error setting at job"
    exit 1

@@ -13,7 +13,6 @@ CONTROLLER_IP="192.168.104.110"
 WORKER_1_IP="192.168.4.111"
 WORKER_2_IP="192.168.4.112"
 WORKER_3_IP="192.168.4.113"
-SCRIPT="$0"
 
 # Functions
 
@@ -78,20 +77,6 @@ elif [[ $LOCAL_IP == $WORKER_3_IP ]]; then
   fi
 else
   logger "investigate error(s), instance private IP(s) aren't matching"
-  exit 1
-fi
-
-########################################
-# Delete this script 1 minute from now #
-########################################
-
-logger "setting at job to delete myself (file: ${HOME}/${SCRIPT})"
-
-$(echo "sudo rm -f ${HOME}/${SCRIPT}" | sudo at now +1 minute)
-if [ $? -eq 0 ]; then
-  logger "job scheduled successfully"
-else
-  logger "investigate, error scheduling self deletion"
   exit 1
 fi
 

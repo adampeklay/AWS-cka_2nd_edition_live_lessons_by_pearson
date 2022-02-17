@@ -54,7 +54,8 @@ kube_controller_public_ip = "55.55.55.55"
 ## Building the Lab
 1.  First head over to the `packer` directory.  You'll see another README that will show you how to get the AMI built, that is required for this lab.  It should only take you about 5 minutes to subscribe an a CentOS 7 AMI and run 1 packer command.  Once you're done with that, proceed to step 2 below.
 
-2.  Now we can spin up the lab.  You'll get an IP address you can ssh to, using the private key from the keypair you created previously.  You don't have to include `--auto-approve` if you don't want to.
+2.  Now we can spin up the lab.  You'll get an IP address you can ssh to, using the private key from the keypair you created previously.  You don't have to include `--auto-approve` if you don't want to. 
+- you must `cd ..` and go back into the root of the repo to run Terraform.  You were previously working in the the `packer` directory)
 ```
 terraform apply --var-file=cka_lab.tfvars --auto-approve
 ...
@@ -80,6 +81,29 @@ When you're done, destroy all the resources to keep your AWS bill nice and low.
 ```
 terraform destroy --var-file=cka_lab.tfvars --auto-approve
 ```
+
+## How long will it take to spin up the lab?
+For Packer, roughly `7 minutes` to create the AMI:
+```
+Build 'cka lab ami.amazon-ebs.k8s-lab-ami' finished after 6 minutes 53 seconds.
+
+==> Wait completed after 6 minutes 53 seconds
+```
+For Terraform, roughly `1.5 minutes`:
+```
+21:10 $ date
+Wed Feb 16 21:10:20 CST 2022
+✔ ~/github/cka_2nd_edition_live_lessons_by_pearson [main|✚ 3⚑ 4] 
+21:10 $ terraform apply --var-file=cka_lab.tfvars --auto-approve
+..
+..
+..
+✔ ~/github/cka_2nd_edition_live_lessons_by_pearson [main|✚ 3⚑ 4] 
+21:11 $ date
+Wed Feb 16 21:11:57 CST 2022
+
+```
+Total time: `~8.5 minutes`
 
 ## When you're completely done with the lab and no longer need to use it anymore
 - The only artifacts left that you'll want to delete should be the ami we created.
