@@ -87,7 +87,7 @@ fi
 
 logger "setting at job to delete myself (file: ${HOME}/${SCRIPT})"
 
-echo "sudo rm -f ${HOME}/${SCRIPT}" | sudo at now +1 minute
+$(echo "sudo rm -f ${HOME}/${SCRIPT}" | sudo at now +1 minute)
 if [ $? -eq 0 ]; then
   logger "job scheduled successfully"
 else

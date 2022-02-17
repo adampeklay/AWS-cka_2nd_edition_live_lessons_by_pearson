@@ -1,8 +1,28 @@
-// Any variable without a default is to be declared in cka_lab.tfvars
 variable "key_name" {
   type        = string
   description = "The SSH keypair to use via ssh to the ec2 instances"
   default     = "cka_lab"
+}
+
+variable "lab_name" {
+  type        = string
+  description = "generic Name value for resources"
+  default     = "cka lab"
+}
+
+variable "region" {
+  type        = string
+  description = "The AWS region to deploy the cluster in.  Set in cka_lab.tfvars."
+}
+
+variable "public_key" {
+  type        = string
+  description = "used for ssh key based auth to the k8s controller node.  Set in cka_lab.tfvars."
+}
+
+variable "my_current_ip" {
+  type        = string
+  description = "Your IP address that's needed for the ingress security group.  Set in cka_lab.tfvars."
 }
 
 variable "controller_name" {
@@ -29,12 +49,6 @@ variable "worker_instance_type" {
   default     = "t2.micro"
 }
 
-variable "my_current_ip" {
-  type        = string
-  description = "LOCAL ENV VAR: Needed for ingress security group"
-  //export TF_VAR_my_current_ip=$(curl -s -4 icanhazip.com)/\32
-}
-
 variable "cidr" {
   type        = string
   description = "the CIDR block for the lab"
@@ -42,13 +56,13 @@ variable "cidr" {
 }
 
 variable "private_subnet" {
-  type        = list(any)
+  type        = list(string)
   description = "The private subnet the lab will use"
   default     = ["192.168.4.0/24"]
 }
 
 variable "public_subnet" {
-  type        = list(any)
+  type        = list(string)
   description = "The public subnet the lab will use"
   default     = ["192.168.104.0/24"]
 }
@@ -63,22 +77,6 @@ variable "worker_private_ip" {
   type        = list(string)
   description = "private work ips required by the lab"
   default     = ["192.168.4.111", "192.168.4.112", "192.168.4.113"]
-}
-
-variable "region" {
-  type        = string
-  description = "The AWS region to deploy the cluster in.  Set in cka_lab.tfvars."
-}
-
-variable "public_key" {
-  type        = string
-  description = "used for ssh key based auth to the k8s controller node.  Set in cka_lab.tfvars."
-}
-
-variable "lab_name" {
-  type        = string
-  description = "generic Name value for resources"
-  default     = "cka lab"
 }
 
 variable "lab_tags" {

@@ -13,8 +13,6 @@ module "kube_controller" {
   subnet_id                   = module.cka_lab_vpc.public_subnets[0]
   private_ip                  = var.controller_private_ip
   associate_public_ip_address = true
-
-  // add tags
 }
 
 // private subnet
@@ -32,10 +30,9 @@ module "kube_worker" {
   vpc_security_group_ids = [aws_security_group.cka_lab.id]
   subnet_id              = module.cka_lab_vpc.private_subnets[0]
   private_ip             = var.worker_private_ip[count.index]
-
 }
 
-// ec2 instance key pair - refrerence any local keypair's public key you wish to use
+// ec2 instance key pair
 resource "aws_key_pair" "cka_lab" {
   key_name   = var.key_name
   public_key = var.public_key
