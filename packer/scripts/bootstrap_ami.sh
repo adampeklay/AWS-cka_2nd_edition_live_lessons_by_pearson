@@ -171,7 +171,7 @@ fi
 # Set the at job to run the script 2 minutes from now #
 #######################################################
 
-sudo at now +2 minute -f $HOME/ec2.sh
+sudo at now +2 minute -f $HOME/${SCRIPT}
 
 if [ $? -eq 0 ]; then
    logger "at job scheduled successfully, hostnames will be set upon ec2 creation"

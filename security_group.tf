@@ -36,5 +36,4 @@ resource "aws_security_group" "cka_lab" {
   }
 
   tags = var.lab_tags
-
 }
