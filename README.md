@@ -89,7 +89,7 @@ Build 'cka lab ami.amazon-ebs.k8s-lab-ami' finished after 6 minutes 53 seconds.
 
 ==> Wait completed after 6 minutes 53 seconds
 ```
-For Terraform, roughly `1.5 minutes`:
+For Terraform, roughly `1.5 minutes` to spin up the lab using the AMI we just created:
 ```
 21:10 $ date
 Wed Feb 16 21:10:20 CST 2022
