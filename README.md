@@ -1,5 +1,5 @@
 # cka_2nd_edition_live_lessons_by_pearson
-Packer and Terraform modules used to spin up a CKA cluster, spec'd out as required by the [CKA 2nd Edition Video course published by Pearson IT Certification](https://www.pearsonitcertification.com/store/certified-kubernetes-administrator-cka-complete-video-9780137438372).
+Packer and Terraform to spin up a CKA cluster, spec'd out as required by the [CKA 2nd Edition Video course published by Pearson IT Certification](https://www.pearsonitcertification.com/store/certified-kubernetes-administrator-cka-complete-video-9780137438372).
 
 
 ## General information
