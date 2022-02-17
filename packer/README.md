@@ -32,7 +32,7 @@ Once you've completed the step above, execute the following command in the `pack
 
 `packer build .`  
 
-The AMI will be build in maybe ~10 minutes.  
+The AMI will be build in roughly 7 minutes.  
 
 ---
 
