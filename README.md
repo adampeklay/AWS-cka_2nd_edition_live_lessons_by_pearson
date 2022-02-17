@@ -29,7 +29,7 @@ user ~ $
 ### INPUTS
 Due to the nature of the lab, there won't be too many inputs for you to provide.  
 
-I've included a `tfvars` file, which requires `3` variables to be declared (you can pick another region, or leave that as is):
+I've included a `cka_lab.tfvars` file, which requires 3 variables to be declared (you can pick another region, or leave that as is):
 
 ```
 region = "us-east-1a"
@@ -52,7 +52,7 @@ kube_controller_public_ip = "55.55.55.55"
 ```
 
 ## Building the Lab
-1.  First head over to the `packer` directory.  You'll see another README that will show you how to get the AMI built, that is required for this lab.  It should only take you about 5 minutes to subscribe an a CentOS 7 AMI and run `1` packer command.  Once you're done with that, proceed to step 2 below.
+1.  First head over to the `packer` directory.  You'll see another README that will show you how to get the AMI built, that is required for this lab.  It should only take you about 5 minutes to subscribe an a CentOS 7 AMI and run 1 packer command.  Once you're done with that, proceed to step 2 below.
 
 2.  Now we can spin up the lab.  You'll get an IP address you can ssh to, using the private key from the keypair you created previously.  You don't have to include `--auto-approve` if you don't want to.
 ```
@@ -69,7 +69,7 @@ Outputs:
 
 kube_controller_public_ip = "55.55.55.55"
 ```
-SSH to the controller, using the `centos` user and the ssh key we created earlier:
+SSH to the controller using the `centos` user, and the ssh key we created earlier:
 ```
 $ ssh -i ~/.ssh/cka_lab centos@55.55.55.55
 ```
@@ -82,7 +82,7 @@ terraform destroy --var-file=cka_lab.tfvars --auto-approve
 ```
 
 ## When you're completely done with the lab and no longer need to use it anymore
-- The only artifacts left that you'll want to delete should only be the ami we created.
+- The only artifacts left that you'll want to delete should be the ami we created.
 - You can unsubscribe from the CentOS 7 AMI when you're done with the lab as well, and remove that AMI from your account too.
 
 That should be it, as everything managed by Terraform will be destroyed when you destroy it.
