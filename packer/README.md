@@ -2,7 +2,7 @@
 ## Background
 I took advantage of some pandemic downtime and got everything we need to have for the lab, baked into an AMI.  
 
-Using linux `at` jobs, we can finish boostrapping the ec2 instances with bash scripts when they're launched from this AMI.  
+Using linux `at` jobs, we can programmatically finish boostrapping the ec2 instances after they're created fromt the AMI.  
 
 ```
 ==> cka lab ami.amazon-ebs.k8s-lab-ami: + logger 'at job scheduled successfully, hostnames will be set upon ec2 creation'
@@ -12,7 +12,7 @@ Using linux `at` jobs, we can finish boostrapping the ec2 instances with bash sc
 ==> cka lab ami.amazon-ebs.k8s-lab-ami: + logger 'at job scheduled successfully, hostnames will be set upon ec2 creation'
 ```
 
-Combined with Terraform, we can spin up and spin down our labs at our leisure, and keep our AWS costs down on our personal free accounts.  
+Combined with Terraform, we can spin up and spin down our labs at our leisure.  This will help us keep our AWS costs down on our personal AWS accounts.  
 
 ### Steps required for making the AMI:
 - subscribe to the AMI specified below
