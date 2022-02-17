@@ -36,4 +36,4 @@ The AMI will be build in maybe ~10 minutes.
 
 ---
 
-Let's go back to the main README in this repo, and start step `2` of "Building the Lab".
+Let's go back to the main README in this repo, and start step 2 of "Building the Lab".
