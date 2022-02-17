@@ -54,8 +54,7 @@ kube_controller_public_ip = "55.55.55.55"
 ## Building the Lab
 1.  First head over to the `packer` directory.  You'll see another README that will show you how to get the AMI built, that is required for this lab.  It should only take you about 5 minutes to subscribe an a CentOS 7 AMI and run 1 packer command.  Once you're done with that, proceed to step 2 below.
 
-2.  Now we can spin up the lab.  You'll get an IP address you can ssh to, using the private key from the keypair you created previously.  You don't have to include `--auto-approve` if you don't want to. 
-- you must `cd ..` and go back into the root of the repo to run Terraform, as you were previously working in the the `packer` directory for step 1.
+2.  Now we can spin up the lab.  You'll get an IP address you can ssh to, using the private key from the keypair you created previously.  You must `cd ..` and go back into the root of the repo to run Terraform, as you were previously working in the the `packer` directory for step 1.
 ```
 terraform apply --var-file=cka_lab.tfvars --auto-approve
 ...
