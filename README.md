@@ -105,7 +105,7 @@ Wed Feb 16 21:11:57 CST 2022
 ```
 Total time: `~8.5 minutes`
 
-## When you're ***completely done with the lab and no longer need to use it anymore
+## When you're ***completely*** done with the lab and no longer need to use it anymore
 - The only artifacts left that you'll want to delete should be the ami we created.
 - You can unsubscribe from the CentOS 7 AMI when you're done with the lab as well, and remove that AMI from your account too.
 
