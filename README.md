@@ -27,7 +27,7 @@ user ~ $
 ```
 
 ### INPUTS
-Due to the nature of the lab, there are only a fe winputs you need to provide.  
+Due to the nature of the lab, there are only a few inputs you need to provide.  
 
 I've included a `cka_lab.tfvars` file, which requires 3 variables to be declared (you can pick another region, or leave that as is):
 
