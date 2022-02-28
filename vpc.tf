@@ -7,6 +7,10 @@ module "cka_lab_vpc" {
 
   azs = [var.region]
 
+  enable_nat_gateway = true
+  single_nat_gateway = true
+  one_nat_gateway_per_az = false
+
   private_subnets = var.private_subnet
   public_subnets  = var.public_subnet
 }

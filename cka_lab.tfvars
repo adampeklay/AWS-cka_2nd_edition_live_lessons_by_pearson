@@ -1,5 +1,5 @@
 region = "us-east-1a"
 
-public_key = ""
+public_key = "REDACTED"
 
-my_current_ip = ""
+my_current_ip = "REDACTED"
